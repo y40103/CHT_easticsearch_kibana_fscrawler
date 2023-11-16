@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: my_es:7.17.6
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: es
+    restart: always
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
+    environment:
+      discovery.type: single-node
+      ELASTIC_PASSWORD: dev123
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      xpack.security.enabled: true
+      xpack.monitoring.collection.enabled: true
+      xpack.security.authc.api_key.enabled: true
+    ports:
+      - "9200:9200"
+    networks:
+      efk_net:
+        ipv4_address: 165.28.0.2
+  kibana:
+    image: kibana:7.17.6
+    container_name: ki
+    environment:
+      ELASTICSEARCH_HOSTS: http://es:9200 # es = elasticsearch container name
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: dev123
+      xpack.security.enabled: true
+
+    ports:
+      - "5601:5601"
+    networks:
+      efk_net:
+        ipv4_address: 165.28.0.3
+
+  fscrawler:
+    image: dadoonet/fscrawler:2.10-SNAPSHOT-ocr-es7
+    container_name: fscrawler
+    restart: always
+    volumes:
+      - ${PWD}/data:/tmp/es:ro
+      - ${PWD}/config:/root/.fscrawler
+      - ${PWD}/logs:/usr/share/fscrawler/logs
+    environment:
+      - FS_URL=/tmp/es
+      - ELASTICSEARCH_URL=http://es:9200
+      - ELASTICSEARCH_INDEX=$(pwd)/data/
+    depends_on:
+      - elasticsearch
+    command: fscrawler idx --restart --rest
+    networks:
+      efk_net:
+        ipv4_address: 165.28.0.4
+
+networks:
+    efk_net:
+        name: "efk_net"
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 165.28.0.0/16
+                  gateway: 165.28.0.1

@@ -1,0 +1,41 @@
+---
+name: "idx"
+fs:
+  update_RATE: "15"
+  indexed_chars: "100%"
+  lang_detect: true
+  continue_on_error: true
+  remove_deleted: true
+
+  includes:
+    - "*.doc"
+    - "*.ppt"
+    - "*.pdf"
+    - "*.docx"
+    - "*.xls"
+    - "*.xlsx"
+    - "*.pptx"
+#    - "*.png"
+#    - "*.jpg"
+#    - "*.jpeg"
+    - "*.txt"
+  excludes:
+    - "*~*"
+
+
+  ignore_above: "128m"
+  filename_as_id: true
+  add_filesize: true
+  ocr:
+    language: "chi_tra+eng"
+    enabled: false
+    pdf_strategy: "ocr_and_text"
+elasticsearch:
+  bulk_size: 1000
+  byte_size : "10mb"
+  nodes:
+    - url: "http://165.28.0.2:9200"
+  username: "elastic"
+  password: "dev123"
+rest :
+  url: "http://165.28.0.4:8080"
