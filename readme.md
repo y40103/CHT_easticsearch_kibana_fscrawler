@@ -1,17 +1,21 @@
 ## Feature
 
 - elasticsearch / kibana / fscrawler 整合
-- 已增加繁體中文分析器
+- 已增加中文分析器 (elasticsearch-analysis-ik), 並為轉繁體中文
 
 
 ## QuickStart
 
-Port: 9200,5601
+| App           | Port |
+|---------------|------|
+| Elasticsearch | 9300|
+| Kibana        | 5601 |
+
 
 
 ```bash
 
-cd efk/
+cd CHT_elasticsearch_kibana_fscrawler/
 # 至該目錄
 
 docker-compose up -d
@@ -21,7 +25,7 @@ docker-compose down
 # 解除佈署
 
 ```
-[kibana登陸](http://localhost:5601)
+[Kibana login ](http://localhost:5601)
 
 ## Basic Auth
 
@@ -47,8 +51,9 @@ fscrawler預設index為idx,會抽取底下文檔內容寫入elasticsearch中的i
 |./config/idx/_settings.yaml |               fscrawler 設定文件 |
 |   ./_default/7/ fscrawler的 |es相關設定 settings , mappings ... |
 
-_settings.yaml 預設關閉ocr, ocr為CPU密集, 有需要可自行調整  
-詳細可參考 [fscrawler](https://fscrawler.readthedocs.io/en/latest/index.html)
+_settings.yaml 預設關閉ocr, ocr為CPU密集, 有需要可自行調整
+詳細可參考 [fscrawler](https://fscrawler.readthedocs.io/en/latest/index.html)  
+filename & content 預設使用中文分析器  
 ```yaml
 name: "idx"
 fs:
