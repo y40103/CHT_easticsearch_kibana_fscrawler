@@ -48,9 +48,9 @@ fscrawler預設index為idx,會抽取底下文檔內容寫入elasticsearch中的i
 ## 設定檔
 
 |                         路徑 |                           說明 |
-|---------------------------|-----------------------------|
+|-------------------------|-----------------------------|
 |./config/idx/_settings.yaml |               fscrawler 設定文件 |
-|   ./_default/7/ fscrawler的 |es相關設定 settings , mappings ... |
+|   ./_default/7 |fscrawler的es相關設定 settings , mappings ... |
 
 _settings.yaml 預設關閉ocr, ocr為CPU密集, 有需要可自行調整
 詳細可參考 [fscrawler](https://fscrawler.readthedocs.io/en/latest/index.html)  
