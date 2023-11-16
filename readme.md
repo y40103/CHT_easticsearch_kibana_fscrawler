@@ -25,7 +25,7 @@ docker-compose down
 # 解除佈署
 
 ```
-[Kibana login ](http://localhost:5601)
+[http://localhost:5601](http://localhost:5601)
 
 ## Basic Auth
 
@@ -43,8 +43,9 @@ fscrawler預設index為idx,會抽取底下文檔內容寫入elasticsearch中的i
 
 
 
+<br>
 
-### 設定檔
+## 設定檔
 
 |                         路徑 |                           說明 |
 |---------------------------|-----------------------------|
